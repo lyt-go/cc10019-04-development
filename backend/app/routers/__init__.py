@@ -1,0 +1,44 @@
+"""注册所有业务路由模块。"""
+from __future__ import annotations
+
+from app.routers import (
+    attr_dict,
+    behavior_heatmap,
+    behavior_path,
+    crowd_select,
+    event_aggregate,
+    event_cleanse,
+    event_track,
+    funnel_analyze,
+    lifetime_value,
+    overlap_analysis,
+    profile_card,
+    retention_calc,
+    session_split,
+    tag_compute,
+    tag_define,
+    tag_drill,
+    tag_snapshot,
+    user_segment,
+)
+
+ROUTERS = [
+    attr_dict,
+    behavior_heatmap,
+    behavior_path,
+    crowd_select,
+    event_aggregate,
+    event_cleanse,
+    event_track,
+    funnel_analyze,
+    lifetime_value,
+    overlap_analysis,
+    profile_card,
+    retention_calc,
+    session_split,
+    tag_compute,
+    tag_define,
+    tag_drill,
+    tag_snapshot,
+    user_segment,
+]
