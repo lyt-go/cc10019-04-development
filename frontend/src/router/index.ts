@@ -13,6 +13,7 @@ const FunnelAnalyze = () => import('@/views/funnel_analyze/index.vue')
 const EventCleanse = () => import('@/views/event_cleanse/index.vue')
 const SessionSplit = () => import('@/views/session_split/index.vue')
 const ProfileCard = () => import('@/views/profile_card/index.vue')
+const ProfileShare = () => import('@/views/profile_share/index.vue')
 const AttrDict = () => import('@/views/attr_dict/index.vue')
 const OverlapAnalysis = () => import('@/views/overlap_analysis/index.vue')
 const TagDrill = () => import('@/views/tag_drill/index.vue')
@@ -36,6 +37,7 @@ const router = createRouter({
     { path: '/event_cleanse', name: 'event_cleanse', component: EventCleanse },
     { path: '/session_split', name: 'session_split', component: SessionSplit },
     { path: '/profile_card', name: 'profile_card', component: ProfileCard },
+    { path: '/profile_share', name: 'profile_share', component: ProfileShare },
     { path: '/attr_dict', name: 'attr_dict', component: AttrDict },
     { path: '/overlap_analysis', name: 'overlap_analysis', component: OverlapAnalysis },
     { path: '/tag_drill', name: 'tag_drill', component: TagDrill },

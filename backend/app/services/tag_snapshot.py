@@ -46,6 +46,7 @@ def create_snapshot(snapshot_id: str) -> dict[str, Any]:
         ],
         "snapshot_path": snapshot["snapshot_path"],
         "storage_format": snapshot["storage_format"],
+        "shares": _snapshot_shares(snapshot_id),
     }
 
     # 存储快照产物
@@ -65,14 +66,32 @@ def create_snapshot(snapshot_id: str) -> dict[str, Any]:
 
 
 def get_snapshot(snapshot_id: str) -> dict[str, Any] | None:
-    """获取标签快照。"""
+    """获取标签快照，每次读取都挂上当前共享记录（投影版本与共享对象）。"""
     artifact = store.get_artifact("tag_snapshot", snapshot_id)
-    if artifact:
-        return artifact
-    try:
-        return create_snapshot(snapshot_id)
-    except ValueError:
-        return None
+    if artifact is None:
+        try:
+            artifact = create_snapshot(snapshot_id)
+        except ValueError:
+            return None
+    artifact["shares"] = _snapshot_shares(snapshot_id)
+    return artifact
+
+
+def _snapshot_shares(snapshot_id: str) -> list[dict[str, Any]]:
+    """该快照的共享记录：画像投影数据的版本和共享对象。"""
+    shares: list[dict[str, Any]] = []
+    for row in store.rows("shared_snapshot"):
+        if row.get("snapshot_id") == snapshot_id:
+            shares.append({
+                "share_id": row.get("share_id"),
+                "projection_id": row.get("projection_id"),
+                "projection_version": row.get("projection_version"),
+                "partner_id": row.get("partner_id"),
+                "card_id": row.get("card_id"),
+                "status": row.get("status"),
+                "created_at": row.get("created_at"),
+            })
+    return shares
 
 
 def compare_snapshots(snapshot_id_a: str, snapshot_id_b: str) -> dict[str, Any]:

@@ -361,6 +361,30 @@ class BehaviorHeatmapEntry(BaseModel):
     refresh_freq: str = Field(..., description="刷新频率")
 
 
+# ========== 画像共享 ==========
+class ProjectionPayload(BaseModel):
+    """创建画像投影：按访问范围裁剪画像卡片数据并写入版本。"""
+
+    card_id: str = Field(..., description="卡片编号")
+    partner_id: str = Field(..., description="共享对象（合作方）编号")
+
+
+class SharePayload(BaseModel):
+    """创建共享快照：绑定标签快照、画像投影版本与共享对象。"""
+
+    snapshot_id: str = Field(..., description="快照编号")
+    card_id: str = Field(..., description="卡片编号")
+    partner_id: str = Field(..., description="共享对象（合作方）编号")
+    projection_version: int | None = Field(None, description="指定投影版本，缺省取最新")
+
+
+class GrantFieldsPayload(BaseModel):
+    """变更字段授权：对来源分群授权或撤回一批标签字段。"""
+
+    fields: list[str] = Field(default_factory=list, description="标签编号列表")
+    remark: str | None = None
+
+
 # ========== 数据链路产物 ==========
 class CleanseResult(BaseModel):
     """清洗结果产物。"""
